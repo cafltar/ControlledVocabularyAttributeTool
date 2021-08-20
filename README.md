@@ -23,7 +23,7 @@ See [requirements.txt](requirements.txt) for more information on required Google
 
 ## Running
 
-[src\main.py](src\main.py) is the entry to the script. Variables `inventory_path` and `attributes_path` need to be defined in the `if __name__ == '__main__':` block. These correspond to the path to the LTAR Inventory and Controlled Vocabulary Attribute files, respectively.
+`src\main.py` is the entry to the script. Variables `inventory_path` and `attributes_path` need to be defined in the `if __name__ == '__main__':` block. These correspond to the path to the LTAR Inventory and Controlled Vocabulary Attribute files, respectively.
 
 ## License
 
