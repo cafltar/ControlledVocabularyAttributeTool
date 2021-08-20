@@ -11,12 +11,16 @@ import pandas as pd
 import controlled_variable_attributes
 
 class GoogleSheetsIO:
-    def __init__(self, path_to_token:str, path_to_credentials:str):
-        print("Init")
+    """Handles input and output operations for Google Sheets
+    """
 
+    def __init__(self, path_to_token:str, path_to_credentials:str):
         self.__initialize_sheets_api(path_to_token, path_to_credentials)
 
     def __initialize_sheets_api(self, path_to_token, path_to_credentials):
+        """Initializes the sheets api and sets sheets service; sets scope and prepares auth
+        """
+
         # If modifying these scopes, delete the file token.json.
         # Scopes: https://developers.google.com/sheets/api/guides/authorizing
         SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -45,10 +49,8 @@ class GoogleSheetsIO:
     
     def create_sheet(self, sheet_name:str, df:pd.DataFrame):
         """Creates a Google Spreadsheet from input dataframe.
-        Returns SpreadsheetId"""
-        
-        print("create_sheet")
-        
+        Returns SpreadsheetId
+        """
         
         # Create sheet
         create_body = {
@@ -85,15 +87,13 @@ class GoogleSheetsIO:
             body = request_body
         ).execute()
 
-        print(response)
-
-        
         return spreadsheet.get('spreadsheetId')
 
 
     def add_columns(self, spreadsheetId:str, start_index:int, num_cols:int):
-        print("add_columns")
-
+        """Adds num_cols blank columns to spreadsheetId starting with start_index. Returns Sheets API response
+        """
+        
         request_body = {
             'requests': [{
                 'insertDimension': {
@@ -113,10 +113,11 @@ class GoogleSheetsIO:
             body = request_body
         ).execute()
 
-        print(response)
+        return response
 
     def add_column_names(self, spreadsheetId:str, row_num:int, col_num:int, headers:list):
-        print("add_column_names")
+        """Writes column headers at row_num to spreadsheetId starting with col_num for all string values in headers. Returns Sheets API response
+        """
 
         requests = []
         curr_col = col_num
@@ -149,7 +150,14 @@ class GoogleSheetsIO:
         controlled_variable_attributes, 
         row_num,
         col_num):
-        print("create_input")
+        """Writes input values corresponding to attributes to spreadsheetId
+
+        :param spreadsheetId: spreadsheetId to write to
+        :param controlled_variable_attributes: List of attributes belonging to controlled variable term
+        :param row_num: row number where values are written to
+        :param col_num: starting column number where values are written to, this increments until all attributes are written
+        :rtype: Google Sheets API response
+        """
         
         requests = []
         curr_col = col_num

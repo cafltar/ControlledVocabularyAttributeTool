@@ -5,12 +5,17 @@ import controlled_variable_attributes
 import inventory_attribute
 
 class AttributeReader:
+    """Handles read operations of a LTAR Controlled Vocabulary Attribute file
+    """
+
     def __init__(self):
         print("Init")
 
     def read_attribute_file(self, file_path:str):
-        print("read_attribute_file")
-
+        """Reads a csv file with attribute values and returns parsed values and column headers
+        rtype: Dictionary of ControlledVariableAttributes and List of strings corresponding to column headers
+        """
+    
         df = pd.read_csv(file_path)
 
         attribute_dict = {}
@@ -35,7 +40,10 @@ class AttributeReader:
         return attribute_dict, attribute_cols
                     
 
-    def parse_attribute_string(self, attribute_string:str):
+    def parse_attribute_string(self, attribute_string:str) -> inventory_attribute.InventoryAttribute:
+        """Takes a attribute string and returns an InventoryAttribute object
+        """
+
         components = attribute_string.split('|')
 
         inputType = components[0]

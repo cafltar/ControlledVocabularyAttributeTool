@@ -13,6 +13,7 @@ def main(
     path_to_token, 
     path_to_credentials):
     print("Main")
+    """Entry point of the program. Orchestrates the creation of Google Sheets based attribute tools and writes them to the root of user's Google Drive"""
 
     SPREADSHEET_ATTRIBUTE_COL_START = 8
     CONTROLLED_VARIABLE_COL_NAME = 'ControlledVariable'
