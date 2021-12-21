@@ -10,3 +10,11 @@
   * Note: no edits at the time of copying; plan to edit this file once [SoilControlledVocabCodedAttribPOC.csv](SoilControlledVocabCodedAttribPOC.csv) is complete
 * [SoilControlledVocabCodedAttribPOC.csv](SoilControlledVocabCodedAttribPOC.csv)
   * Subset of [SoilControlledVocabCodedAttrib.csv](SoilControlledVocabCodedAttrib.csv) to test code
+
+## 2021-12-21
+
+* [SoilControlledVocabCodedAttrib_20211221.csv](SoilControlledVocabCodedAttrib_20211221.csv)
+  * Copied from Bryan's CAFLTAR Google Drive `Projects\LtarLogisticsSoilsWorkingGroup\Working\2021_ControlledVocabularyAttributeTool` -- see notes there for changes
+* [LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv](LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv)
+  * An incomplete working version of the soil data inventory. The committee is still working on revising the variable mappings, flagging duplicated values, etc. Bryan Carlson downloaded this file as a csv to test-run the new coded attribute files
+  * Will O. said ECB entries can be used to test, but delete the dark gray lines first (they are duplicates). Bryan did so.
