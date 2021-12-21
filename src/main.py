@@ -79,8 +79,8 @@ def main(
                         SPREADSHEET_ATTRIBUTE_COL_START)   
 
 if __name__ == '__main__':
-    inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20210325.csv'
-    attributes_path = pathlib.Path.cwd() / 'data' / 'input' / 'SoilControlledVocabCodedAttrib.csv'
+    inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv'
+    attributes_path = pathlib.Path.cwd() / 'data' / 'input' / 'SoilControlledVocabCodedAttrib_20211221.csv'
 
     main(
         inventory_path,

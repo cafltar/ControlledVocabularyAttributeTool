@@ -18,3 +18,4 @@
 * [LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv](LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv)
   * An incomplete working version of the soil data inventory. The committee is still working on revising the variable mappings, flagging duplicated values, etc. Bryan Carlson downloaded this file as a csv to test-run the new coded attribute files
   * Will O. said ECB entries can be used to test, but delete the dark gray lines first (they are duplicates). Bryan did so.
+  * Also removed a space to change the header "Controlled Variable" to "ControlledVariable"
