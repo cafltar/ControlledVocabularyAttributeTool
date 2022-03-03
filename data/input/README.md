@@ -19,3 +19,10 @@
   * An incomplete working version of the soil data inventory. The committee is still working on revising the variable mappings, flagging duplicated values, etc. Bryan Carlson downloaded this file as a csv to test-run the new coded attribute files
   * Will O. said ECB entries can be used to test, but delete the dark gray lines first (they are duplicates). Bryan did so.
   * Also removed a space to change the header "Controlled Variable" to "ControlledVariable"
+
+  ## 2022-02-07
+
+  * [SoilControlledVocabCodedAttrib_20220207.csv](SoilControlledVocabCodedAttrib_20220207.csv)
+    * Copied from [SoilControlledVocabCodedAttrib_20211221.csv](SoilControlledVocabCodedAttrib_20211221.csv)
+    * Will O. added more changes to the file on Bryan's CAFLTAR Google Drive `Projects\LtarLogisticsSoilsWorkingGroup\Working\2021_ControlledVocabularyAttributeTool` -- see notes there for changes
+  
