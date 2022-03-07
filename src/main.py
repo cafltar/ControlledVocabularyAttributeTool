@@ -15,7 +15,12 @@ def main(
     print("Main")
     """Entry point of the program. Orchestrates the creation of Google Sheets based attribute tools and writes them to the root of user's Google Drive"""
 
+    # Last column with site-specific information (like SiteVariableName)
+    SPREADSHEET_SITE_COL_END = 4
+    
+    # Column were attributes are to be appended to
     SPREADSHEET_ATTRIBUTE_COL_START = 8
+    
     CONTROLLED_VARIABLE_COL_NAME = 'ControlledVariable'
 
     # Read soil-specific data inventory (also does some cleaning) <-- code smell!
@@ -37,7 +42,7 @@ def main(
     site_ids = inventory["LTARSiteCode"].unique()
 
     # !!! temp !!!
-    site_ids = ['ECB']
+    site_ids = ['PRHPA']
     # !!!!!!!!!!!!
 
     spreadsheetIds = []
@@ -77,6 +82,13 @@ def main(
                         attrib, 
                         index+1,                            #+1 for header
                         SPREADSHEET_ATTRIBUTE_COL_START)   
+
+        # Format the document
+        writer.add_formatting(
+            spreadsheetId,
+            SPREADSHEET_SITE_COL_END,
+            SPREADSHEET_ATTRIBUTE_COL_START, 
+            len(attribute_cols))
 
 if __name__ == '__main__':
     inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv'

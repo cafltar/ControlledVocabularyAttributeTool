@@ -1,3 +1,4 @@
+from urllib import request
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -202,8 +203,247 @@ class GoogleSheetsIO:
 
         return response
 
+    def add_formatting(
+        self, 
+        spreadsheetId:str, 
+        last_site_field_col:int,
+        first_attrib_col:int, 
+        num_attrib_cols:int):
+        requests = []
         
-                
+        requests.append(self.__add_vertical_borders(first_attrib_col, first_attrib_col+num_attrib_cols, 2))
+        requests.append(self.__color_input_cells(first_attrib_col, first_attrib_col+num_attrib_cols))
+        requests.append(self.__freeze_cells(1,last_site_field_col)) #1 for header row
+        requests.append(self.__format_header_text())
+        requests.append(self.__set_word_wrap(0, first_attrib_col+num_attrib_cols))
+        requests.append(
+            self.__set_col_width(
+                182, 
+                first_attrib_col, 
+                first_attrib_col+num_attrib_cols, 
+                2, 
+                90))
+        requests.append(self.__hide_unused_metadata(first_attrib_col+num_attrib_cols, 99))
+
+        body = {
+            'requests': requests
+        }
+        
+        response = self.service.spreadsheets().batchUpdate(
+            spreadsheetId = spreadsheetId,
+            body = body
+        ).execute()
+
+        return response
+    
+    def __add_vertical_borders(
+        self,
+        start_col:int,
+        end_col:int,
+        step_col:int):
+        """Adds a left vertical border to each column, starting with start_col then at every column after step_col until end_col is reached"""
+        
+        requests = []
+
+        curr_col = start_col
+
+        while curr_col <= end_col:
+            request = {
+                'updateBorders': {
+                    'range': {
+                        'startColumnIndex': curr_col,
+                        'endColumnIndex': curr_col+1
+                    },
+                    'left': {
+                        'color': {
+                            'red': 0,
+                            'blue': 0,
+                            'green': 0,
+                            'alpha': 1
+                        },
+                        'style': 'SOLID'
+                    }
+                }
+            }
+
+            requests.append(request)
+
+            curr_col += step_col
+
+        return requests
+
+    def __color_input_cells(
+        self,
+        start_col:int,
+        end_col:int):
+        
+        request = {
+            'addConditionalFormatRule': {
+                'rule': {
+                    'booleanRule': {
+                        'condition': {
+                            'type': 'NOT_BLANK'
+                        },
+                        'format': {
+                            'backgroundColor': {
+                                'alpha': 1,
+                                'red': 217/255,
+                                'green': 234/255,
+                                'blue': 211/255
+                            }
+                        }
+                    },
+                    'ranges': [{
+                        'startColumnIndex': start_col,
+                        'endColumnIndex': end_col
+                    }]
+                }   
+            }
+        }
+
+        return request
+    
+    def __freeze_cells(
+        self,
+        row_count:int,
+        col_count:int):
+        request = {
+            'updateSheetProperties': {
+                'properties': {
+                    'gridProperties': {
+                        'frozenRowCount': row_count,
+                        'frozenColumnCount': col_count
+                    }
+                },
+                'fields': 'gridProperties.frozenRowCount,gridProperties.frozenColumnCount'
+            }
+        }
+
+        return request
+
+    def __format_header_text(self):
+        request = {
+            'repeatCell': {
+                'range': {
+                    'startRowIndex': 0,
+                    'endRowIndex': 1
+                },
+                'cell': {
+                    'userEnteredFormat': {
+                        'textFormat': {
+                            'bold': 'true',
+                            'underline': 'true'
+                        }
+                    }
+                },
+                'fields': 'userEnteredFormat(textFormat)'
+            }
+        }
+
+        return request
+
+    def __set_word_wrap(
+        self,
+        start_col:int,
+        end_col:int):
+        
+        request = {
+            'repeatCell': {
+                'range': {
+                    'startColumnIndex': start_col,
+                    'endColumnIndex': end_col
+                },
+                'cell': {
+                    'userEnteredFormat': {
+                        'wrapStrategy': 'WRAP'
+                    }
+                },
+                'fields': 'userEnteredFormat.wrapStrategy'
+            }
+        }
+
+        return request
+
+    def __set_col_width(
+        self,
+        col_width_pixel:int,
+        start_col:int,
+        end_col:int,
+        step_col:int,
+        standard_width_pixel:int = None):
+        """Sets width of columns to col_width_pixel, starting with start_col then at every column after step_col until end_col is reached. If standard_width_pixel is defined, sets all other columns, from 0 to end_col, to that width"""
+        requests = []
+
+        if standard_width_pixel is not None:
+            request = {
+                'updateDimensionProperties': {
+                    'range': {
+                        'dimension': 'COLUMNS',
+                        'startIndex': 0,
+                        'endIndex': end_col
+                    },
+                    'properties': {
+                        'pixelSize': standard_width_pixel
+                    },
+                    'fields': 'pixelSize'
+                }
+            }
+
+            requests.append(request)
+
+        curr_col = start_col
+
+        while curr_col <= end_col:
+            request = {
+                'updateDimensionProperties': {
+                    'range': {
+                        'dimension': 'COLUMNS',
+                        'startIndex': curr_col,
+                        'endIndex': curr_col+1
+                    },
+                    'properties': {
+                        'pixelSize': col_width_pixel
+                    },
+                    'fields': 'pixelSize'
+                }
+            }
+
+            requests.append(request)
+
+            curr_col += step_col
+
+        return requests
+
+    def __hide_unused_metadata(
+        self,
+        start_col:int,
+        end_col:int):
+
+        request = {
+            'repeatCell': {
+                'range': {
+                    'startColumnIndex': start_col,
+                    'endColumnIndex': end_col
+                },
+                'cell': {
+                    'userEnteredFormat': {
+                        'textFormat': {
+                            'foregroundColor': {
+                                'alpha': 1,
+                                'red': 217/255,
+                                'green': 217/255,
+                                'blue': 217/255
+                            }
+                        }
+                    }
+                },
+                'fields': 'userEnteredFormat(textFormat)'
+            }
+        }
+
+        return request
+
+
     def __get_select_label(self, attribute):
         return f'--- {attribute.label} ---'
 
