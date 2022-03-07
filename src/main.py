@@ -91,8 +91,8 @@ def main(
             len(attribute_cols))
 
 if __name__ == '__main__':
-    inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20211020edits_Downloaded20211221_Test.csv'
-    attributes_path = pathlib.Path.cwd() / 'data' / 'input' / 'SoilControlledVocabCodedAttrib_20211221.csv'
+    inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20211020edits_Downloaded20220307.csv'
+    attributes_path = pathlib.Path.cwd() / 'data' / 'input' / 'SoilControlledVocabCodedAttrib_20220207.csv'
 
     main(
         inventory_path,

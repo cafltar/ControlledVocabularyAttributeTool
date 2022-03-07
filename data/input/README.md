@@ -26,3 +26,9 @@
     * Copied from [SoilControlledVocabCodedAttrib_20211221.csv](SoilControlledVocabCodedAttrib_20211221.csv)
     * Will O. added more changes to the file on Bryan's CAFLTAR Google Drive `Projects\LtarLogisticsSoilsWorkingGroup\Working\2021_ControlledVocabularyAttributeTool` -- see notes there for changes
   
+  ## 2022-03-07
+
+  - [LtarSoilDataInventory_20211020edits_Downloaded20220307.csv](LtarSoilDataInventory_20211020edits_Downloaded20220307.csv)
+    - Downloaded as CSV from https://docs.google.com/spreadsheets/d/1Y8QTjBL8jY53rk8_nMzE4j4_k2FabruHkQIUxNs3duE/edit#gid=1580238413
+    - Has incomplete, but most recent, data from soil inventory
+    - Edited header "Controlled Variable" to "ControlledVariable"

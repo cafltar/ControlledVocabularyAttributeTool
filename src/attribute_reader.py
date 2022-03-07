@@ -51,7 +51,10 @@ class AttributeReader:
         options = None
 
         if len(components) > 2:
-            options = json.loads(components[2])
+            try:
+                options = json.loads(components[2])
+            except:
+                print("They broke it")
 
         attribute = inventory_attribute.InventoryAttribute(
             inputType,
