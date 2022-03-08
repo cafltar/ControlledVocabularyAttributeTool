@@ -37,7 +37,7 @@ class AttributeReader:
 
             attribute_dict[var_name] = var_attribute
 
-        return attribute_dict, attribute_cols
+        return df, attribute_dict, attribute_cols
                     
 
     def parse_attribute_string(self, attribute_string:str) -> inventory_attribute.InventoryAttribute:

@@ -208,7 +208,9 @@ class GoogleSheetsIO:
         spreadsheetId:str, 
         last_site_field_col:int,
         first_attrib_col:int, 
-        num_attrib_cols:int):
+        num_attrib_cols:int,
+        attrib_width:int,
+        standard_width:int):
         requests = []
         
         requests.append(self.__add_vertical_borders(first_attrib_col, first_attrib_col+num_attrib_cols, 2))
@@ -218,11 +220,11 @@ class GoogleSheetsIO:
         requests.append(self.__set_word_wrap(0, first_attrib_col+num_attrib_cols))
         requests.append(
             self.__set_col_width(
-                182, 
+                attrib_width, 
                 first_attrib_col, 
                 first_attrib_col+num_attrib_cols, 
                 2, 
-                90))
+                standard_width))
         requests.append(self.__hide_unused_metadata(first_attrib_col+num_attrib_cols, 99))
 
         body = {
