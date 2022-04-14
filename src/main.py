@@ -140,63 +140,8 @@ def create_attribute_sheet(
 
     return spreadsheetId
 
-def write_reference_sheet(
-    writer:google_sheets_io.GoogleSheetsIO, 
-    attributes_df,
-    attributes_dict, 
-    attribute_cols):
-
-    controlled_terms = attributes_df[[
-        'GeneralCategory',
-        'ControlledVariable',
-        'ControlledDescription',
-        'Units']]
-    
-    # Fill na's with blanks
-    controlled_terms.fillna('', inplace=True)
-
-    spreadsheetId = writer.create_sheet(
-            f'Attributes_Reference',
-            controlled_terms)
-    
-    # Add attribute columns
-    writer.add_columns(
-        spreadsheetId, 
-        len(controlled_terms.columns), 
-        len(attribute_cols))
-
-    # Add headers for attribute columns
-    writer.add_column_names(
-        spreadsheetId,
-        0,
-        len(controlled_terms.columns),
-        attribute_cols
-    )
-    
-    # Add inputs
-    controlled_var_col = controlled_terms['ControlledVariable']
-    for index, value in controlled_var_col.items():
-        if value:
-            attrib = attributes_dict.get(value)
-            #attrib = attributes_dict[value]
-            if attrib:
-                writer.create_inputs(
-                    spreadsheetId,
-                    attrib, 
-                    index+1,                            #+1 for header
-                    len(controlled_terms.columns))   
-
-    # Format the document
-    writer.add_formatting(
-        spreadsheetId,
-        len(controlled_terms.columns),
-        len(controlled_terms.columns), 
-        len(attribute_cols),
-        185,
-        100)
-
 if __name__ == '__main__':
-    inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20211020edits_Downloaded20220307.csv'
+    inventory_path = pathlib.Path.cwd() / 'data' / 'input' / 'LtarSoilDataInventory_20220331edits - LtarSoilDataInventory_1020edits.csv'
     attributes_path = pathlib.Path.cwd() / 'data' / 'input' / 'SoilControlledVocabCodedAttrib_20220207.csv'
 
     main(
@@ -204,4 +149,4 @@ if __name__ == '__main__':
         attributes_path, 
         pathlib.Path.cwd() / 'token.json', 
         pathlib.Path.cwd() / 'credentials.json',
-        True)
+        False)

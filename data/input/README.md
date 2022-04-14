@@ -32,3 +32,10 @@
     - Downloaded as CSV from https://docs.google.com/spreadsheets/d/1Y8QTjBL8jY53rk8_nMzE4j4_k2FabruHkQIUxNs3duE/edit#gid=1580238413
     - Has incomplete, but most recent, data from soil inventory
     - Edited header "Controlled Variable" to "ControlledVariable"
+
+## 2022-04-14
+
+- [LtarSoilDataInventory_20220331edits - LtarSoilDataInventory_1020edits.csv](LtarSoilDataInventory_20220331edits%20-%20LtarSoilDataInventory_1020edits.csv)
+  - Downloaded as CSV from https://docs.google.com/spreadsheets/d/1l4E0G96eOiKPzwIEl4dQ7sSXlb22Q0NefkCwsxn_o6o/edit#gid=1580238413 on 2022-04-14
+  - Latest (final?) version of the soil data inventory after Will et al worked with each site to confirm variable mappings, deleted unwanted variables, and addressed any other issues. 
+  - After downloading, I edited header "Controlled Variable" to "ControlledVariable"
