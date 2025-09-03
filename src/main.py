@@ -61,11 +61,10 @@ def main(
             100,
             CONTROLLED_VARIABLE_COL_NAME)
 
-    site_ids = inventory["LTARSiteCode"].unique()
+    site_ids = inventory["LTARSiteCode"].unique().tolist()
 
-    # !!! temp !!!
-    site_ids = ['PRHPA']
-    # !!!!!!!!!!!!
+    #=== Manually remove sites from list if the spreadsheet was already created. Temp/terrible fix for Google Sheet APi throwing errors
+    site_ids.remove("ABS-UF")
 
     spreadsheetIds = []
     for site_id in site_ids:

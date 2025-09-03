@@ -6,6 +6,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
 import os.path
+import time
 
 import pandas as pd
 
@@ -200,6 +201,10 @@ class GoogleSheetsIO:
             spreadsheetId = spreadsheetId,
             body = body
         ).execute()
+
+        # Quick hack to prevent quota exceeded exception via Google Sheet API
+        # TODO: Implement some sort of exponential backoff algorithm, or look into the 'tenacity' library
+        time.sleep(10)
 
         return response
 
